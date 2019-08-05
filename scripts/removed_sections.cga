@@ -1,0 +1,63 @@
+###################################################
+###################################################
+##REMOVED SECTIONS OF BLACK.CGA RULE FILE######
+###################################################
+###################################################
+
+
+###################################################3
+# Ground Cover
+#
+
+const getDirtmapTexture = fileRandom("/ESRI.lib/assets/General/Dirtmap/dirtmap*.jpg")
+const getParkingTexture = fileRandom("/ESRI.lib/assets/Groundcover/Parking/parking*.jpg")
+getGreenSpaceTexture	= imageBestRatio("/ESRI.lib/assets/Groundcover/Green/green*.jpg","yx")
+
+ParkingGround -->
+	alignScopeToGeometry(zUp,0,longest)
+	setupProjection(0,scope.yx,20,35) projectUV(0)
+	texture(getParkingTexture)
+	setupProjection(2,scope.yx,'1,'1) projectUV(2)
+	set(material.dirtmap,getDirtmapTexture)
+
+GreenGround -->
+	alignScopeToGeometry(zUp,0,longest)
+	setupProjection(0,scope.yx,'1,'1) projectUV(0)
+	texture(getGreenSpaceTexture)
+	setupProjection(2,scope.yx,'1,'1) projectUV(2)
+	set(material.dirtmap,getDirtmapTexture)
+
+
+###################################################3
+# Trees
+#
+
+getTreeTropical 	= listRandom("Coconut Palm;Date Palm;Palm Lily;Mexican Palmetto;California Palm;Ruffle Palm;Banana Tree;Bamboo;Cabbage Palm Fern;")
+getTreeRandomForest = listRandom("American Chestnut;Red Hickory;Southern Magnolia;Sugar Maple;Northern Red Oak;White Oak;Scots Pine;Douglas Fir;Lodgepole Pine;California Redwood;Giant Sequoia;American Sycamore;Sassafras;California Walnut;")
+getTreeZone06Tree	= listRandom("Sugar Maple;California Incense Cedar;Red Hickory;American Chestnut;Western Juniper;American Sycamore;Northern Red Oak;Basswood;Field Elm;Lawson Cypress;Honey Locust;Yellow Poplar;Black Tupelo;")
+
+getTree =
+	case Mix == "Tropical"			: getTreeTropical
+	case Mix == "Random Forest"		: getTreeRandomForest
+	case Mix == "Zone 6 Trees"		: getTreeZone06Tree
+	else							: ""
+
+FewTrees -->
+	case ShowTrees != "None":
+		NIL
+		set(Plant_Loader.Representation,ShowTrees)
+		scatter(surface, floor(geometry.area/250), uniform){ Plant_Loader.Generate(getTree) }
+		NIL
+	else:
+		NIL
+
+Trees -->
+	case ShowTrees != "None":
+		NIL
+		set(Plant_Loader.Representation,ShowTrees)
+		scatter(surface, floor(geometry.area/300), uniform){ Plant_Loader.Generate(getTree) }
+		scatter(surface, floor(geometry.area/200), uniform){ Plant_Loader.Generate(getTree) }
+		scatter(surface, floor(geometry.area/400), uniform){ Plant_Loader.Generate(getTree) }
+		NIL
+	else:
+		NIL

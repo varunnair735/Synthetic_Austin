@@ -1,0 +1,43 @@
+import numpy as np
+import os
+
+def rename(src_file, dst_file):
+    """For filenames in a .txt file, this will fix the odd naming in the
+        txt file resulting from incorrect splicing with samplepatch"""
+    #reads in each line of .txt file and makes each line a list
+    lineList = [line.rstrip('\n') for line in open(src_file)]
+
+    with open(dst_file, 'w') as f:
+        for item in lineList:
+            if "patRGB" in item:
+                new_item = item[:-19] + "RGB_samplepatch.tif"
+            else:
+                new_item = item
+            f.write("%s\n" % new_item)
+
+def refactor(src_dir, output_file):
+    """Will go through each file in a directory and rename the file if
+        it does not match the required format and creates master list"""
+
+    #renames things
+    with open(output_file, 'w') as f:
+        for filename in os.listdir(src_dir):
+            if "samplepatch" in filename:
+                new_name = filename[:-16] + ".tif"
+                dst = src_dir + new_name
+                src = src_dir + filename
+                os.rename(src, dst)
+                if "GT" in filename:
+                    new_item = filename[:-19]
+                    f.write("%s\n" % new_item)
+
+            elif "GT" in filename:
+                new_item = filename[:-7]
+                f.write("%s\n" % new_item)
+
+
+if __name__ == '__main__':
+    refactor('/work/vbn4/Source/P_data/shaped/0.1/data/Original_Tiles',\
+    '/work/vbn4/Source/P_data/shaped/0.1/data/files.txt')
+    #refactor('/Users/Varun/Desktop/testing_ground/1/Original_Tiles/',\
+     '/Users/Varun/Desktop/testing_ground/1/files.txt')
