@@ -117,11 +117,11 @@ def importFbxCamera(fbxfile, axis, angle, height):
 
 def exportImages(directory, v, Tag=""):
    path = directory + "/_" + Tag + "_RGB.jpg"
-   v.snapshot(path)
+   v.snapshot(path,width=572,height=572)
 
 def exportGroundtruths(directory, v, Tag=""):
     path = directory + "/_" + Tag + "_GT.jpg"
-    v.snapshot(path)
+    v.snapshot(path,width=572,height=572)
 
 def exportGroundtruths2(directory, v, Tag=""):
    path = directory + "/_" + Tag + "_GT2.jpg"
@@ -145,20 +145,20 @@ def loop_capturer_dynamic_attributes(start_axis, step, end_axis, tag,
             print(counter)
             time.sleep(0.02)
             if mode == 'RGB':
-                exportImages(ce.toFSPath('images/austin1.5/raw'), view, Tag=tag+'_'+str(counter))
+                exportImages(ce.toFSPath('images/chicago2.1/raw'), view, Tag=tag+'_'+str(counter))
             elif mode == 'GT':
                 lightSettings = ce.getLighting()
                 lightSettings.setSolarElevationAngle(90)
                 lightSettings.setSolarIntensity(1)
                 ce.setLighting(lightSettings)
                 ce.waitForUIIdle()
-                exportGroundtruths(ce.toFSPath('images/austin1.5/raw'), view, Tag=tag+'_'+str(counter))
+                exportGroundtruths(ce.toFSPath('images/chicago2.1/raw'), view, Tag=tag+'_'+str(counter))
             elif mode == 'GT2':
                 lightSettings = ce.getLighting()
                 lightSettings.setSolarElevationAngle(90)
                 lightSettings.setSolarIntensity(1)
                 ce.setLighting(lightSettings)
-                exportGroundtruths2(ce.toFSPath('images/austin1.5/raw'), view, Tag=tag+'_'+str(counter)) #break
+                exportGroundtruths2(ce.toFSPath('images/chicago2.1/raw'), view, Tag=tag+'_'+str(counter)) #break
 
 def load_rule_file(rule_file_path, objs):
     all_shapes = ce.getObjectsFrom(ce.scene, objs)
@@ -183,20 +183,21 @@ if __name__ == '__main__':
     random.seed(1)
     start_time = time.time()
     #load_rule_file('austin_rule.cga', ce.isShape)
-    """
-    loop_capturer_dynamic_attributes(start_axis=(619800, -3351600), step=182, end_axis=(621800, -3348300),
-                                     tag='austin5', adjust_list = ['la', 'ca', 'li'],
-                                     light_angle=45,  camera_angle=80, light_intensity=0.8,
-                                     dynamic_range={'ca': 10, 'la': 15, 'li': 0.3},
-                                     height='175', mode='RGB')
+    
+    loop_capturer_dynamic_attributes(start_axis=(442700, -4639700), step=182, end_axis=(445600, -4637100),
+                                     tag='chicago1', adjust_list = ['la', 'ca', 'li'],
+                                     light_angle=60,  camera_angle=90, light_intensity=1.0,
+                                     dynamic_range={'ca': 0, 'la': 0, 'li': 0.0},
+                                     height='651.7', mode='RGB')
+
     """
     #load_rule_file('black.cga', ce.isBlock)
     random.seed(1)
     
-    loop_capturer_dynamic_attributes(start_axis=(619800, -3351600), step=182, end_axis=(621800, -3348300),
-                                     tag='austin5', adjust_list = ['la', 'ca', 'li'],
-                                     light_angle=45,  camera_angle=80, light_intensity=0.8,
-                                     dynamic_range={'ca': 10, 'la': 15, 'li': 0.3},
-                                     height='175', mode='GT')
-    
+    loop_capturer_dynamic_attributes(start_axis=(442700, -4639700), step=182, end_axis=(445600, -4637100),
+                                     tag='chicago1', adjust_list = ['la', 'ca', 'li'],
+                                     light_angle=90,  camera_angle=90, light_intensity=1.0,
+                                     dynamic_range={'ca': 0, 'la': 0, 'li': 0.0},
+                                     height='651.7', mode='GT')
+    """
     print('Duration: {}'.format(time.time()-start_time))

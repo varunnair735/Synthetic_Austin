@@ -38,8 +38,8 @@ attr Type 			= getType
 attr HeightFactor 	= 1
 
 @Group("Trees",3)
-@Order(1) @Range("None","Fan","Model","Analytical") @Description("Do not generate Models for whole city i.e. take care with polygon counts!")
-attr ShowTrees		= "Fan"
+@Order(1) @Range("None","Fan","Realistic","Analytical") @Description("Do not generate Models for whole city i.e. take care with polygon counts!")
+attr ShowTrees		= "None"
 @Order(2) @Range("Random Forest","Tropical","Zone 6 Trees")
 attr Mix 			= "Zone 6 Trees"
 

@@ -16,7 +16,7 @@ import re
 
 final_res = (572, 572)
 file_name_list = []
-file_path = '/Users/Varun/Documents/CityEngine/Default Workspace/c3/images/austin1.5/raw/'
+file_path = '/Users/Varun/Documents/CityEngine/Default Workspace/c3/images/austin2.7/raw/'
 
 
 def num_2_str(num):
